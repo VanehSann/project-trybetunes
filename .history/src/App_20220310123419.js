@@ -16,8 +16,7 @@ class App extends React.Component {
     this.state = {
       inputName: '',
       isSaveButtonDisabled: true,
-      logado: false,
-      loading: false,
+      logado: true,
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -37,37 +36,27 @@ class App extends React.Component {
     });
   }
 
-  // Inpirado na minha resolução no shoppingCart, usando o setTimeout
-  // e https://stackoverflow.com/questions/34504322/settimeout-in-react-native
-
   onSaveButtonClick = () => {
-    const magicNumber2000 = 2000;
-    setTimeout(() => {
-      this.setState({
-        logado: true,
-      });
-    }, magicNumber2000);
     const { inputName } = this.state;
     createUser({ name: inputName });
     this.setState({
-      loading: true,
+      logado: false,
     });
   }
 
   render() {
-    const { inputName, isSaveButtonDisabled, logado, loading } = this.state;
+    const { inputName, isSaveButtonDisabled, logado } = this.state;
     return (
       <>
         <p>TrybeTunes</p>
         <BrowserRouter>
           <Switch>
             <Route path="/" exact>
-              {logado ? <Redirect to="/search" /> : <Login
+              {logado ? <Redirect to="/Search" /> : <Login
                 inputName={ inputName }
                 isSaveButtonDisabled={ isSaveButtonDisabled }
                 onInputChange={ this.onInputChange }
                 onSaveButtonClick={ this.onSaveButtonClick }
-                loading={ loading }
               />}
 
             </Route>

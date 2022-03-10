@@ -36,17 +36,14 @@ class App extends React.Component {
       isSaveButtonDisabled: !isMajor,
     });
   }
-
-  // Inpirado na minha resolução no shoppingCart, usando o setTimeout
-  // e https://stackoverflow.com/questions/34504322/settimeout-in-react-native
+  // https://stackoverflow.com/questions/34504322/settimeout-in-react-native
 
   onSaveButtonClick = () => {
-    const magicNumber2000 = 2000;
     setTimeout(() => {
       this.setState({
         logado: true,
       });
-    }, magicNumber2000);
+    }, 2000);
     const { inputName } = this.state;
     createUser({ name: inputName });
     this.setState({
@@ -62,7 +59,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route path="/" exact>
-              {logado ? <Redirect to="/search" /> : <Login
+              {logado ? <Redirect to="/Search" /> : <Login
                 inputName={ inputName }
                 isSaveButtonDisabled={ isSaveButtonDisabled }
                 onInputChange={ this.onInputChange }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import { Redirect } from 'react-router';
 import Login from './pages/Login';
 import Search from './pages/Search';
 import Album from './pages/Album';
@@ -8,7 +7,6 @@ import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
-import { createUser } from './services/userAPI';
 
 class App extends React.Component {
   constructor() {
@@ -16,14 +14,13 @@ class App extends React.Component {
     this.state = {
       inputName: '',
       isSaveButtonDisabled: true,
-      logado: false,
-      loading: false,
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
 
   onInputChange({ target }) {
-    const { name, value } = target;
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
       [name]: value,
     }, this.validando);
@@ -31,45 +28,24 @@ class App extends React.Component {
 
   validando = () => {
     const { inputName } = this.state;
-    const isMajor = inputName.length > 2;
+    const isNotEmpty = inputName.value.length > 0;
     this.setState({
-      isSaveButtonDisabled: !isMajor,
-    });
-  }
-
-  // Inpirado na minha resolução no shoppingCart, usando o setTimeout
-  // e https://stackoverflow.com/questions/34504322/settimeout-in-react-native
-
-  onSaveButtonClick = () => {
-    const magicNumber2000 = 2000;
-    setTimeout(() => {
-      this.setState({
-        logado: true,
-      });
-    }, magicNumber2000);
-    const { inputName } = this.state;
-    createUser({ name: inputName });
-    this.setState({
-      loading: true,
+      isSaveButtonDisabled: !isNotEmpty,
     });
   }
 
   render() {
-    const { inputName, isSaveButtonDisabled, logado, loading } = this.state;
+    const { inputName, isSaveButtonDisabled } = this.state;
     return (
       <>
         <p>TrybeTunes</p>
         <BrowserRouter>
           <Switch>
             <Route path="/" exact>
-              {logado ? <Redirect to="/search" /> : <Login
+              <Login
                 inputName={ inputName }
                 isSaveButtonDisabled={ isSaveButtonDisabled }
-                onInputChange={ this.onInputChange }
-                onSaveButtonClick={ this.onSaveButtonClick }
-                loading={ loading }
-              />}
-
+              />
             </Route>
             <Route path="/search" component={ Search } exact />
             <Route path="/album/:id" component={ Album } exact />
