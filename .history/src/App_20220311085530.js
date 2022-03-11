@@ -59,7 +59,7 @@ class App extends React.Component {
     const { inputName, isSaveButtonDisabled, logado, loading } = this.state;
     return (
       <>
-        <Header inputName={ inputName } />
+        <Header />
         <BrowserRouter>
           <Switch>
             <Route path="/" exact>
