@@ -17,8 +17,10 @@ class App extends React.Component {
     this.state = {
       inputName: '',
       isSaveButtonDisabled: true,
+      isSearchButtonDisabled: true,
       logado: false,
       loading: false,
+      inputSearch: '',
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -31,10 +33,11 @@ class App extends React.Component {
   }
 
   validando = () => {
-    const { inputName } = this.state;
-    const isMajor = inputName.length > 2;
+    const { inputName, inputSearch } = this.state;
+    const isMajor = (inputName.length > 2);
     this.setState({
       isSaveButtonDisabled: !isMajor,
+      isSearchButtonDisabled: inputSearch.length <= 1,
     });
   }
 
@@ -42,12 +45,12 @@ class App extends React.Component {
   // e https://stackoverflow.com/questions/34504322/settimeout-in-react-native
 
   onSaveButtonClick = () => {
-    const magicNumber2000 = 2000;
+    const magicNumber1500 = 1500;
     setTimeout(() => {
       this.setState({
         logado: true,
       });
-    }, magicNumber2000);
+    }, magicNumber1500);
     const { inputName } = this.state;
     createUser({ name: inputName });
     this.setState({
@@ -56,31 +59,52 @@ class App extends React.Component {
   }
 
   render() {
-    const { inputName, isSaveButtonDisabled, logado, loading } = this.state;
+    const { inputName,
+      isSaveButtonDisabled,
+      logado,
+      loading,
+      inputSearch,
+      isSearchButtonDisabled } = this.state;
     return (
-      <>
-        <Header inputName={ inputName } />
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" exact>
-              {logado ? <Redirect to="/search" /> : <Login
-                inputName={ inputName }
-                isSaveButtonDisabled={ isSaveButtonDisabled }
-                onInputChange={ this.onInputChange }
-                onSaveButtonClick={ this.onSaveButtonClick }
-                loading={ loading }
-              />}
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact>
+            {logado ? <Redirect to="/search" /> : <Login
+              inputName={ inputName }
+              isSaveButtonDisabled={ isSaveButtonDisabled }
+              onInputChange={ this.onInputChange }
+              onSaveButtonClick={ this.onSaveButtonClick }
+              loading={ loading }
+            />}
 
-            </Route>
-            <Route path="/search" component={ Search } exact />
-            <Route path="/album/:id" component={ Album } exact />
-            <Route path="/favorites" component={ Favorites } exact />
-            <Route path="/profile" component={ Profile } exact />
-            <Route path="/profile/edit" component={ ProfileEdit } exact />
-            <Route path="/*" component={ NotFound } exact />
-          </Switch>
-        </BrowserRouter>
-      </>
+          </Route>
+          <Route path="/search" exact>
+            <Header inputName={ inputName } />
+            <Search
+              inputSearch={ inputSearch }
+              isSearchButtonDisabled={ isSearchButtonDisabled }
+              onInputChange={ this.onInputChange }
+            />
+          </Route>
+          <Route path="/album/:id" exact>
+            <Header inputName={ inputName } />
+            <Album />
+          </Route>
+          <Route path="/favorites" exact>
+            <Header inputName={ inputName } />
+            <Favorites />
+          </Route>
+          <Route path="/profile" exact>
+            <Header inputName={ inputName } />
+            <Profile />
+          </Route>
+          <Route path="/profile/edit" exact>
+            <Header inputName={ inputName } />
+            <ProfileEdit />
+          </Route>
+          <Route path="/*" component={ NotFound } exact />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
