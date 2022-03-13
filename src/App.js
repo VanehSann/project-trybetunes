@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
 import { createUser } from './services/userAPI';
+import searchAlbumsAPI from './services/searchAlbumsAPI';
 import Header from './componentes/Header';
 
 class App extends React.Component {
@@ -21,6 +22,9 @@ class App extends React.Component {
       logado: false,
       loading: false,
       inputSearch: '',
+      searchMessege: false,
+      novo: '',
+      arrayNovo: '',
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -58,13 +62,25 @@ class App extends React.Component {
     });
   }
 
+  funcSearch = async () => {
+    const { inputSearch } = this.state;
+    const arrayNovoObj = await searchAlbumsAPI(inputSearch);
+    this.setState({
+      novo: inputSearch,
+      searchMessege: true,
+      inputSearch: '',
+      arrayNovo: arrayNovoObj,
+    });
+  }
+
   render() {
     const { inputName,
       isSaveButtonDisabled,
       logado,
       loading,
       inputSearch,
-      isSearchButtonDisabled } = this.state;
+      isSearchButtonDisabled,
+      searchMessege, novo, arrayNovo } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -84,6 +100,10 @@ class App extends React.Component {
               inputSearch={ inputSearch }
               isSearchButtonDisabled={ isSearchButtonDisabled }
               onInputChange={ this.onInputChange }
+              funcSearch={ this.funcSearch }
+              searchMessege={ searchMessege }
+              novo={ novo }
+              arrayNovo={ arrayNovo }
             />
           </Route>
           <Route path="/album/:id" exact>
