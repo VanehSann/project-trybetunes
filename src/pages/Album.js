@@ -43,9 +43,11 @@ class Album extends Component {
         </p>
         {musicas.map((info) => (
           <MusicCard
+            enviaObjDoGetMusic={ info }
             previewUrl={ info.previewUrl }
             key={ info.trackId }
             trackName={ info.trackName }
+            trackId={ info.trackId }
           />
         ))}
 
