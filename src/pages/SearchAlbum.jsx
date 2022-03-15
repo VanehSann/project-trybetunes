@@ -17,7 +17,7 @@ class SearchAlbum extends React.Component {
         <img src={ image } alt={ collectionName } />
         <h3>{ collectionName }</h3>
         <p>{nameArt}</p>
-        <strong>{collectionPrice }</strong>
+        <strong>{ collectionPrice }</strong>
         <Link
           to={ `/album/${collectionId}` }
           data-testid={ `link-to-album-${collectionId}` }

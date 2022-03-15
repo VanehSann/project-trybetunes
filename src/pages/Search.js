@@ -57,7 +57,6 @@ class Search extends React.Component {
               collectionName={ novoArr.collectionName }
               collectionPrice={ novoArr.collectionPrice }
             />)))}
-        {console.log(arrayNovo)}
       </div>
     );
   }

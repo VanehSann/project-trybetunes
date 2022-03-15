@@ -106,10 +106,12 @@ class App extends React.Component {
               arrayNovo={ arrayNovo }
             />
           </Route>
-          <Route path="/album/:id" exact>
-            <Header inputName={ inputName } />
-            <Album />
-          </Route>
+          <Route
+            path="/album/:id"
+            exact
+            render={ (props) => <Album { ...props } /> }
+            inputName={ inputName }
+          />
           <Route path="/favorites" exact>
             <Header inputName={ inputName } />
             <Favorites />
