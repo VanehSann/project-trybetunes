@@ -1,16 +1,16 @@
 import React from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Redirect } from 'react-router';
-import Login from './pages/Login';
-import Search from './pages/Search';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Header from './componentes/Header';
 import Album from './pages/Album';
 import Favorites from './pages/Favorites';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
-import NotFound from './pages/NotFound';
-import { createUser } from './services/userAPI';
+import Search from './pages/Search';
 import searchAlbumsAPI from './services/searchAlbumsAPI';
-import Header from './componentes/Header';
+import { createUser } from './services/userAPI';
 
 class App extends React.Component {
   constructor() {
