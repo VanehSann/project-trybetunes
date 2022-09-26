@@ -1,7 +1,7 @@
 
 <p align="center"><b>
  <a href="#----">English version README 🇺🇸 </a> •
- <a href="#---Trybetunes-project-------">README em Português 🇧🇷</a>
+ <a href="#--Trybetunes-project-------">README em Português 🇧🇷</a>
   </b>
 </p>
 <h1 align="center">
